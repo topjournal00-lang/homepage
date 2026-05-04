@@ -32,7 +32,7 @@
       position: relative;
     }
 
-    /* 校名后面的时间样式：保持模板原本的橙色(.exp-period 配色),稍小字号,和校名同一行 */
+    /* 校名后面的时间样式:橙色,稍小字号,和校名同一行 */
     .exp-title-line {
       display: flex;
       align-items: baseline;
@@ -42,8 +42,28 @@
     .exp-title-line .exp-period-inline {
       font-size: 0.9em;
       font-weight: normal;
-      /* 颜色继承模板里 .exp-period 的橙色变量 */
       color: var(--accent-color, #c2714f);
+    }
+
+    /* ===== 图片显示修复 ===== */
+
+    /* 头像:裁剪成圆形/方形居中显示,保持原比例不变形 */
+    .profile-card .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;          /* 保持比例,裁剪超出部分 */
+      object-position: center;    /* 从中心裁剪 */
+      aspect-ratio: 1 / 1;         /* 强制容器为正方形 */
+    }
+
+    /* 学校 logo:保持原始比例,完整显示(不裁剪),内部居中 */
+    .institution-logo {
+      width: 60px !important;
+      height: 60px !important;
+      object-fit: contain;         /* 保持比例,完整显示,留白填充 */
+      object-position: center;
+      background-color: transparent;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -65,7 +85,7 @@
     <header class="sidebar">
       <div class="profile-card">
         <a class="image avatar">
-          <img src="assets/img/avatar.jpg" alt="Guangzhe Wang">
+          <img src="assets/img/avatar.jpeg" alt="Guangzhe Wang">
         </a>
 
         <h1 class="site-name">Guangzhe Wang</h1>
@@ -89,7 +109,7 @@
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year PhD candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year PhD candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and the application of artificial intelligence, particularly large language models, in finance and accounting research. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
           <p>Prior to my PhD, I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
           <p><strong><a href="#" target="_blank" rel="noopener">Download my CV</a></strong> (replace this link with your resume)</p>
         </div>
@@ -127,7 +147,7 @@
 
           <div class="card timeline-item">
             <div class="experience-item">
-              <img src="assets/img/zufe.jpg" alt="ZUFE logo" class="institution-logo">
+              <img src="assets/img/zufe.png" alt="ZUFE logo" class="institution-logo">
               <div class="experience-content">
                 <p class="exp-title exp-title-line">
                   <strong>Zhejiang University of Finance and Economics</strong>
@@ -145,7 +165,7 @@
         <div class="section-body">
           <div class="card timeline-item">
             <div class="experience-item">
-              <img src="assets/img/berkeley.jpg" alt="UC Berkeley logo" class="institution-logo">
+              <img src="assets/img/berkeley.png" alt="UC Berkeley logo" class="institution-logo">
               <div class="experience-content">
                 <p class="exp-title exp-title-line">
                   <strong>University of California, Berkeley</strong>
