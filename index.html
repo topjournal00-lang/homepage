@@ -32,7 +32,7 @@
       position: relative;
     }
 
-    /* 校名后面的时间样式：灰色、稍小、和校名同一行 */
+    /* 校名后面的时间样式：保持模板原本的橙色(.exp-period 配色),稍小字号,和校名同一行 */
     .exp-title-line {
       display: flex;
       align-items: baseline;
@@ -41,8 +41,9 @@
     }
     .exp-title-line .exp-period-inline {
       font-size: 0.9em;
-      color: #888;
       font-weight: normal;
+      /* 颜色继承模板里 .exp-period 的橙色变量 */
+      color: var(--accent-color, #c2714f);
     }
   </style>
 </head>
@@ -88,7 +89,7 @@
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year PhD candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and the application of AI, particularly LLMs, in finance and accounting research. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year PhD candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and the application of artificial intelligence, particularly large language models, in finance and accounting research. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
           <p>Prior to my PhD, I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
           <p><strong><a href="#" target="_blank" rel="noopener">Download my CV</a></strong> (replace this link with your resume)</p>
         </div>
