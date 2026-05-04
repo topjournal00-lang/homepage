@@ -25,13 +25,10 @@
     /* About Me 段落两端对齐,并优化字间距避免稀疏 */
     #about .section-body p {
       text-align: justify;
-      /* 只在词与词之间分配空白,避免字母间被拉开 */
       text-justify: inter-word;
-      /* 允许自动连字符,让单词可以在合适处断行,使分布更自然 */
       hyphens: auto;
       -webkit-hyphens: auto;
       -ms-hyphens: auto;
-      /* 保持单词间距正常基线 */
       word-spacing: normal;
     }
 
@@ -83,6 +80,26 @@
       background-color: transparent;
       flex-shrink: 0;
     }
+
+    /* ===== Visitor Map 卡片样式 ===== */
+    .visitor-card-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      overflow: hidden;
+    }
+    .visitor-card-body a {
+      display: block;
+      width: 100%;
+      line-height: 0; /* 去掉图片下方的空白间隙 */
+    }
+    .visitor-card-body img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body class="theme-luka">
@@ -107,7 +124,7 @@
         </a>
 
         <h1 class="site-name">Guangzhe Wang</h1>
-        <p class="site-email">guangzhelele.wang [at] connect.polyu.hk</p>
+        <p class="site-email">guangzhelele.wang[at]connect.polyu.hk</p>
 
         <div class="social-icons">
           <a href="mailto:guangzhelele.wang@connect.polyu.hk" title="Email"><i class="fa-solid fa-envelope"></i></a>
@@ -117,7 +134,8 @@
         <div class="visitor-card">
           <div class="visitor-card-title">Visitor Map</div>
           <div class="visitor-card-body">
-            Replace this card with your own ClustrMaps image or analytics widget.
+            <!-- ClustrMaps Visitor Map for guangzhe-wang.com -->
+            <a href="https://clustrmaps.com/site/1c9x6" title="ClustrMaps"><img src="//www.clustrmaps.com/map_v2.png?d=gNBBDmDlFqUcXuvSl4rqSLpo8O1DyNdNzJUAE3mdZUQ&cl=ffffff" alt="Visitor Map"></a>
           </div>
         </div>
       </div>
@@ -144,7 +162,7 @@
                   <strong>The Hong Kong Polytechnic University</strong>
                   <span class="exp-period-inline">Sep 2023 - Present</span>
                 </p>
-                <p class="exp-detail">Ph.D. in Accounting, School of Accounting and Finance</p>
+                <p class="exp-detail">Ph.D. Candidate in Accounting, School of Accounting and Finance</p>
                 <p class="exp-detail"><em>Advisor:</em> <a href="https://sites.google.com/view/nancysu/home" target="_blank" rel="noopener" class="advisor-link">Prof. Nancy Su</a></p>
               </div>
             </div>
@@ -248,8 +266,6 @@
     <footer class="site-footer">
       <p>
         &copy; 2026 Guangzhe Wang. All rights reserved.
-        <br>
-        <span class="template-credit"><a href="https://github.com/wzsyyh/luka-homepage-template">Luka Homepage Template</a> by <a href="https://wzsyyh.github.io/">Yuheng Yang</a></span>
       </p>
     </footer>
   </div>
