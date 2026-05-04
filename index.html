@@ -7,8 +7,8 @@
   <!-- 临时禁止搜索引擎收录,网站完全写好准备公开时删掉下面这行 -->
   <meta name="robots" content="noindex, nofollow">
   <title>Guangzhe Wang - Homepage</title>
-  <meta name="description" content="Personal academic homepage of Guangzhe Wang, PhD Candidate in Accounting at The Hong Kong Polytechnic University.">
-  <meta name="keywords" content="Guangzhe Wang, accounting, PhD candidate, disclosure, large language models, AI in finance">
+  <meta name="description" content="Personal academic homepage of Guangzhe Wang, Ph.D. Candidate in Accounting at The Hong Kong Polytechnic University.">
+  <meta name="keywords" content="Guangzhe Wang, accounting, Ph.D. candidate, disclosure, large language models, AI in finance">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,9 +22,17 @@
   <link rel="stylesheet" href="assets/css/theme-luka.css">
 
   <style>
-    /* About Me 段落两端对齐 */
+    /* About Me 段落两端对齐,并优化字间距避免稀疏 */
     #about .section-body p {
       text-align: justify;
+      /* 只在词与词之间分配空白,避免字母间被拉开 */
+      text-justify: inter-word;
+      /* 允许自动连字符,让单词可以在合适处断行,使分布更自然 */
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      /* 保持单词间距正常基线 */
+      word-spacing: normal;
     }
 
     /* 让 Education 部分也显示和 Experience 一样的时间线竖线和圆点 */
@@ -119,8 +127,8 @@
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year PhD candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
-          <p>Prior to my PhD, I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
+          <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
           <p><strong><a href="#" target="_blank" rel="noopener">Download my CV</a></strong> (replace this link with your resume)</p>
         </div>
       </div>
@@ -136,7 +144,7 @@
                   <strong>The Hong Kong Polytechnic University</strong>
                   <span class="exp-period-inline">Sep 2023 - Present</span>
                 </p>
-                <p class="exp-detail">PhD Candidate in Accounting, School of Accounting and Finance</p>
+                <p class="exp-detail">Ph.D. Candidate in Accounting, School of Accounting and Finance</p>
                 <p class="exp-detail"><em>Advisor:</em> <a href="https://sites.google.com/view/nancysu/home" target="_blank" rel="noopener" class="advisor-link">Prof. Nancy Su</a></p>
               </div>
             </div>
@@ -181,7 +189,7 @@
                   <strong>University of California, Berkeley</strong>
                   <span class="exp-period-inline">Jan 2026 - Present</span>
                 </p>
-                <p class="exp-detail">Visiting PhD Student, Haas School of Business</p>
+                <p class="exp-detail">Visiting Ph.D. Student, Haas School of Business</p>
                 <p class="exp-detail"><em>Host Advisor:</em> <a href="https://haas.berkeley.edu/faculty/eventov-omri/" target="_blank" rel="noopener" class="advisor-link">Prof. Omri Even-Tov</a></p>
               </div>
             </div>
