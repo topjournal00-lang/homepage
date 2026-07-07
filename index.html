@@ -91,12 +91,69 @@
       max-width: 100%;
     }
     /* ===== Working Papers / Research 列表样式 ===== */
-    #publications .bibliography > li {
-      margin-bottom: 1.1em;
+    /* 去掉左侧橙色边栏和默认列表符号,改用 CV 风格的方括号编号 [1] [2] */
+    #publications .publications,
+    #publications .bibliography,
+    #publications .bibliography > li,
+    #publications .pub-row,
+    #publications .pub-content {
+      border: none !important;
+      border-left: none !important;
+      background: none !important;
+      box-shadow: none !important;
+      padding-left: 0 !important;
+      margin-left: 0 !important;
     }
-    .pub-status {
-      color: var(--accent-color, #c2714f);
+    #publications .bibliography {
+      list-style: none;
+      counter-reset: pub;
+      padding-left: 0;
+      margin: 0;
+    }
+    #publications .bibliography > li {
+      counter-increment: pub;
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6em;
+      margin-bottom: 1.15em;
+      padding-left: 0;
+    }
+    /* [1] [2] 编号:和 CV 一样放在左侧,橙色以呼应主题 */
+    #publications .bibliography > li::before {
+      content: "[" counter(pub) "]";
+      flex-shrink: 0;
+      min-width: 2.1em;
       font-weight: 600;
+      color: var(--accent-color, #c2714f);
+      font-variant-numeric: tabular-nums;
+    }
+    /* 论文标题:不加粗、不斜体 */
+    #publications .title {
+      font-weight: 400;
+      font-style: normal;
+    }
+    /* 期刊名:黑体(加粗)+ 斜体 */
+    #publications .periodical em strong,
+    #publications .periodical strong em {
+      font-weight: 700;
+      font-style: italic;
+    }
+    /* 期刊名如果带链接:同样加粗+斜体,颜色继承正文 */
+    #publications .periodical a {
+      color: inherit;
+      text-decoration: none;
+      font-style: italic;
+      font-weight: 700;
+    }
+    #publications .periodical a:hover {
+      text-decoration: underline;
+    }
+    /* Under Review / Revise & Resubmit:普通正文,不加粗、不斜体 */
+    .pub-status {
+      font-weight: 400;
+      font-style: normal;
+      color: inherit;
     }
   </style>
 </head>
@@ -143,9 +200,9 @@
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. I am currently a Visiting Ph.D. Student at the Haas School of Business, University of California, Berkeley. My research studies investors' use of information and informational (dis)advantages in markets, with a focus on large language models for textual analysis and the impact of artificial intelligence on the information environment.</p>
-          <p>Prior to my Ph.D., I received a Master of Data Science with a concentration in Financial Data Analysis and Mathematics. I am always open to collaboration and intellectual exchange, so please feel free to get in touch.</p>
-          <p><strong><a href="assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
+          <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
+          <p><strong><a href="https://guangzhe-wang.com/assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
       </div>
       <div class="section" id="education">
@@ -208,14 +265,6 @@
           </div>
         </div>
       </div>
-      <div class="section" id="research-interests">
-        <h2 class="section-title">Research Interests</h2>
-        <div class="section-body">
-          <div class="card">
-            <p class="exp-detail">Investors' use of information; informational (dis)advantages in markets; large language models for textual analysis; impact of AI on the information environment.</p>
-          </div>
-        </div>
-      </div>
       <div class="section" id="publications">
         <h2 class="section-title">Working Papers &amp; Research in Progress</h2>
         <div class="section-body">
@@ -225,7 +274,6 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</div>
-                    <div class="author"><strong>Guangzhe Wang</strong></div>
                     <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
                   </div>
                 </div>
@@ -234,7 +282,6 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
-                    <div class="author"><strong>Guangzhe Wang</strong></div>
                     <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
                   </div>
                 </div>
@@ -243,7 +290,6 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</div>
-                    <div class="author"><strong>Guangzhe Wang</strong></div>
                     <div class="periodical"><span class="pub-status">Revise &amp; Resubmit</span> at <em><strong>Economics Letters</strong></em></div>
                   </div>
                 </div>
@@ -252,49 +298,19 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
-                    <div class="author"><strong>Guangzhe Wang</strong></div>
-                    <div class="periodical"><em>Working paper</em></div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener">International Review of Economics &amp; Finance</a></strong></em></div>
                   </div>
                 </div>
               </li>
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Does Letter to Shareholders Convey Private Information?</div>
-                    <div class="author"><strong>Guangzhe Wang</strong>, Nancy Su, Xiaoyang Li</div>
-                    <div class="periodical"><em>Draft available on request</em></div>
+                    <div class="title">Does Letter to Shareholders Convey Private Information? (with Caixia Hu, Xiaoyang Li, Nancy Su)</div>
+                    <div class="periodical">Draft available on request</div>
                   </div>
                 </div>
               </li>
             </ol>
-          </div>
-        </div>
-      </div>
-      <div class="section" id="teaching">
-        <h2 class="section-title">Teaching</h2>
-        <div class="section-body">
-          <div class="card timeline-item">
-            <div class="experience-item">
-              <img src="assets/img/polyu.png" alt="PolyU logo" class="institution-logo">
-              <div class="experience-content">
-                <p class="exp-title exp-title-line">
-                  <strong>The Hong Kong Polytechnic University</strong>
-                  <span class="exp-period-inline">2024 - 2025</span>
-                </p>
-                <p class="exp-detail">Teaching Assistant, School of Accounting and Finance</p>
-                <p class="exp-detail">AF5373 ESG Investment and Green Finance (Graduate)</p>
-                <p class="exp-detail">AF2108 Financial Accounting (Undergraduate)</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section" id="skills">
-        <h2 class="section-title">Skills</h2>
-        <div class="section-body">
-          <div class="card">
-            <p class="exp-detail">Proficient in Natural Language Processing and Large Language Models.</p>
-            <p class="exp-detail">Proficient in Python, Stata, and LaTeX.</p>
           </div>
         </div>
       </div>
