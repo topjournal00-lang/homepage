@@ -115,23 +115,33 @@
       position: relative;
       display: flex;
       align-items: flex-start;
-      gap: 0.6em;
-      margin-bottom: 1.15em;
+      gap: 0.55em;
+      margin-bottom: 0.55em;   /* 论文之间的间隙调小 */
       padding-left: 0;
     }
-    /* [1] [2] 编号:和 CV 一样放在左侧,橙色以呼应主题 */
+    /* [1] [2] 编号:放在左侧,黑色(跟随正文色) */
     #publications .bibliography > li::before {
       content: "[" counter(pub) "]";
       flex-shrink: 0;
       min-width: 2.1em;
       font-weight: 600;
-      color: var(--accent-color, #c2714f);
+      color: inherit;   /* 黑色/正文色 */
       font-variant-numeric: tabular-nums;
     }
-    /* 论文标题:不加粗、不斜体 */
+    /* 论文标题:不加粗、不斜体,尽量不换行 */
     #publications .title {
       font-weight: 400;
       font-style: normal;
+      white-space: nowrap;          /* 尽量保持标题在一行 */
+      overflow-wrap: normal;
+    }
+    /* 屏幕较窄放不下时允许标题换行,避免溢出 */
+    @media (max-width: 640px) {
+      #publications .title { white-space: normal; }
+    }
+    /* 期刊/状态行:和标题之间留一点点行距 */
+    #publications .periodical {
+      margin-top: 0.15em;
     }
     /* 期刊名:黑体(加粗)+ 斜体 */
     #publications .periodical em strong,
@@ -274,7 +284,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
+                    <div class="periodical">&mdash; <span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
                   </div>
                 </div>
               </li>
@@ -282,7 +292,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
+                    <div class="periodical">&mdash; <span class="pub-status">Under Review</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
                   </div>
                 </div>
               </li>
@@ -290,7 +300,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</div>
-                    <div class="periodical"><span class="pub-status">Revise &amp; Resubmit</span> at <em><strong>Economics Letters</strong></em></div>
+                    <div class="periodical">&mdash; <span class="pub-status">Revise &amp; Resubmit</span> at <em><strong>Economics Letters</strong></em></div>
                   </div>
                 </div>
               </li>
@@ -298,7 +308,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener">International Review of Economics &amp; Finance</a></strong></em></div>
+                    <div class="periodical">&mdash; <span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener">International Review of Economics &amp; Finance</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -306,7 +316,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Does Letter to Shareholders Convey Private Information? (with Caixia Hu, Xiaoyang Li, Nancy Su)</div>
-                    <div class="periodical">Draft available on request</div>
+                    <div class="periodical">&mdash; <span class="pub-status">Draft available on request</span></div>
                   </div>
                 </div>
               </li>
