@@ -80,12 +80,13 @@
       padding: 0;
       overflow: hidden;
     }
-    /* ClustrMaps widget 容器:给它一个合理的最小高度,避免加载前塌陷 */
-    #clustrmaps-widget {
+    /* 访客地图链接:占满卡片宽度 */
+    .visitor-card-body a {
+      display: block;
       width: 100%;
-      min-height: 120px;
+      line-height: 0;   /* 去掉图片下方的空隙 */
     }
-    #clustrmaps-widget img,
+    /* 访客地图图片(MapMyVisitors 平面点状地图) */
     .visitor-card-body img {
       width: 100%;
       height: auto;
@@ -208,12 +209,14 @@
           <div class="visitor-card-title">Visitor Map</div>
           <div class="visitor-card-body">
             <!--
-              ClustrMaps Visitor Map for guangzhe-wang.com
-              使用新版 widget 嵌入方式(DOM 注入),取代旧版 map_v2.js。
-              旧版 map_v2.js 依赖 document.write(),而现代浏览器会忽略异步脚本里的
-              document.write() 调用,导致地图无法显示。新版 widget 把地图注入下面这个 div。
+              ================= VISITOR MAP: MapMyVisitors (flat dotted map) =================
+              ClustrMaps 的替代方案(ClustrMaps 后端已不稳定)。用一张简单的 <img>
+              呈现平面点状世界地图,不依赖 document.write,兼容性最好。
+              这里用的是 guangzhe-wang.com 的专属 ID(site 1c6ch)。
             -->
-            <div id="clustrmaps-widget"></div>
+            <a href="https://mapmyvisitors.com/web/1c6ch" title="Visitor Map" target="_blank" rel="noopener">
+              <img src="https://mapmyvisitors.com/map.png?d=8vPQe1PMqQ1IVAIWDLbuqh_qj9lj8NmX7ZUVvu0QD7w&cl=ffffff" alt="Visitor location map" loading="lazy">
+            </a>
           </div>
         </div>
       </div>
@@ -222,7 +225,7 @@
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behaviors.</p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
           <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
           <p><strong><a href="/assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
@@ -344,8 +347,6 @@
     </footer>
   </div>
   <script src="assets/js/scale.fix.js"></script>
-  <!-- ClustrMaps 新版 widget:通过 DOM 注入渲染,替代会失效的旧版 map_v2.js -->
-  <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=gNBBDmDlFqUcXuvSl4rqSLpo8O1DyNdNzJUAE3mdZUQ"></script>
   <script>
     (function() {
       const themeToggle = document.getElementById('themeToggle');
