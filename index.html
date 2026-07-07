@@ -18,13 +18,15 @@
   <link rel="stylesheet" href="assets/css/font_sans_serif.css">
   <link rel="stylesheet" href="assets/css/theme-luka.css">
   <style>
-    /* About Me 段落两端对齐,并优化字间距避免稀疏 */
+    /* About Me 段落两端对齐;关闭自动断词(hyphens)避免单词中间出现破折号换行 */
     #about .section-body p {
       text-align: justify;
       text-justify: inter-word;
-      hyphens: auto;
-      -webkit-hyphens: auto;
-      -ms-hyphens: auto;
+      hyphens: none;
+      -webkit-hyphens: none;
+      -ms-hyphens: none;
+      word-break: normal;
+      overflow-wrap: normal;
       word-spacing: normal;
     }
     /* 让 Education 部分也显示和 Experience 一样的时间线竖线和圆点 */
@@ -116,8 +118,15 @@
       display: flex;
       align-items: flex-start;
       gap: 0.55em;
-      margin-bottom: 0.55em;   /* 论文之间的间隙调小 */
+      margin-bottom: 0.25em;   /* 论文之间的间隙进一步调小 */
       padding-left: 0;
+      line-height: 1.35;
+    }
+    /* 清掉条目内部块的默认外边距,避免额外撑高间距 */
+    #publications .pub-row,
+    #publications .pub-content,
+    #publications .pub-content > div {
+      margin: 0;
     }
     /* [1] [2] 编号:放在左侧,黑色(跟随正文色) */
     #publications .bibliography > li::before {
@@ -212,7 +221,7 @@
         <div class="section-body">
           <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
           <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
-          <p><strong><a href="https://guangzhe-wang.com/assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
+          <p><strong><a href="/assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
       </div>
       <div class="section" id="education">
