@@ -10,17 +10,13 @@
   <meta name="description" content="Personal academic homepage of Guangzhe Wang, Ph.D. Candidate in Accounting at The Hong Kong Polytechnic University.">
   <meta name="keywords" content="Guangzhe Wang, accounting, Ph.D. candidate, disclosure, large language models, AI in finance">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/a860a211d3.js" crossorigin="anonymous"></script>
-
   <link rel="stylesheet" href="assets/css/font_sans_serif.css">
   <link rel="stylesheet" href="assets/css/theme-luka.css">
-
   <style>
     /* About Me 段落两端对齐,并优化字间距避免稀疏 */
     #about .section-body p {
@@ -31,12 +27,10 @@
       -ms-hyphens: auto;
       word-spacing: normal;
     }
-
     /* 让 Education 部分也显示和 Experience 一样的时间线竖线和圆点 */
     #education .card {
       position: relative;
     }
-
     /* 校名后面的时间样式:橙色,稍小字号,和校名同一行 */
     .exp-title-line {
       display: flex;
@@ -49,7 +43,6 @@
       font-weight: normal;
       color: var(--accent-color, #c2714f);
     }
-
     /* 教授名字样式:橙色加粗,和日期同色 */
     .advisor-link {
       color: var(--accent-color, #c2714f) !important;
@@ -59,9 +52,7 @@
     .advisor-link:hover {
       text-decoration: underline;
     }
-
     /* ===== 图片显示修复 ===== */
-
     /* 头像:裁剪成圆形/方形居中显示,保持原比例不变形 */
     .profile-card .avatar img {
       width: 100%;
@@ -70,7 +61,6 @@
       object-position: center;
       aspect-ratio: 1 / 1;
     }
-
     /* 学校 logo:保持原始比例,完整显示(不裁剪),内部居中 */
     .institution-logo {
       width: 60px !important;
@@ -80,7 +70,6 @@
       background-color: transparent;
       flex-shrink: 0;
     }
-
     /* ===== Visitor Map 卡片样式 ===== */
     .visitor-card-body {
       display: flex;
@@ -89,16 +78,25 @@
       padding: 0;
       overflow: hidden;
     }
-    .visitor-card-body a {
-      display: block;
+    /* ClustrMaps widget 容器:给它一个合理的最小高度,避免加载前塌陷 */
+    #clustrmaps-widget {
       width: 100%;
-      line-height: 0; /* 去掉图片下方的空白间隙 */
+      min-height: 120px;
     }
+    #clustrmaps-widget img,
     .visitor-card-body img {
       width: 100%;
       height: auto;
       display: block;
       max-width: 100%;
+    }
+    /* ===== Working Papers / Research 列表样式 ===== */
+    #publications .bibliography > li {
+      margin-bottom: 1.1em;
+    }
+    .pub-status {
+      color: var(--accent-color, #c2714f);
+      font-weight: 600;
     }
   </style>
 </head>
@@ -115,42 +113,41 @@
       </div>
     </div>
   </nav>
-
   <div class="wrapper">
     <header class="sidebar">
       <div class="profile-card">
         <a class="image avatar">
           <img src="assets/img/avatar.jpeg" alt="Guangzhe Wang">
         </a>
-
         <h1 class="site-name">Guangzhe Wang</h1>
         <p class="site-email">guangzhelele.wang[at]connect.polyu.hk</p>
-
         <div class="social-icons">
           <a href="mailto:guangzhelele.wang@connect.polyu.hk" title="Email"><i class="fa-solid fa-envelope"></i></a>
           <a href="https://www.linkedin.com/in/guangzhe-wang-54bb44366" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         </div>
-
         <div class="visitor-card">
           <div class="visitor-card-title">Visitor Map</div>
           <div class="visitor-card-body">
-            <!-- ClustrMaps Visitor Map for guangzhe-wang.com -->
-            <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=gNBBDmDlFqUcXuvSl4rqSLpo8O1DyNdNzJUAE3mdZUQ&cl=ffffff&w=a"></script>
+            <!--
+              ClustrMaps Visitor Map for guangzhe-wang.com
+              使用新版 widget 嵌入方式(DOM 注入),取代旧版 map_v2.js。
+              旧版 map_v2.js 依赖 document.write(),而现代浏览器会忽略异步脚本里的
+              document.write() 调用,导致地图无法显示。新版 widget 把地图注入下面这个 div。
+            -->
+            <div id="clustrmaps-widget"></div>
           </div>
         </div>
       </div>
     </header>
-
     <section class="content">
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
-          <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
-          <p><strong><a href="#" target="_blank" rel="noopener">Download my CV</a></strong> (replace this link with your resume)</p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. I am currently a Visiting Ph.D. Student at the Haas School of Business, University of California, Berkeley. My research studies investors' use of information and informational (dis)advantages in markets, with a focus on large language models for textual analysis and the impact of artificial intelligence on the information environment.</p>
+          <p>Prior to my Ph.D., I received a Master of Data Science with a concentration in Financial Data Analysis and Mathematics. I am always open to collaboration and intellectual exchange, so please feel free to get in touch.</p>
+          <p><strong><a href="assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
       </div>
-
       <div class="section" id="education">
         <h2 class="section-title">Education</h2>
         <div class="section-body">
@@ -167,7 +164,6 @@
               </div>
             </div>
           </div>
-
           <div class="card timeline-item">
             <div class="experience-item">
               <img src="assets/img/polyu.png" alt="PolyU logo" class="institution-logo">
@@ -176,11 +172,10 @@
                   <strong>The Hong Kong Polytechnic University</strong>
                   <span class="exp-period-inline">Sep 2022 - Jun 2023</span>
                 </p>
-                <p class="exp-detail">M.Sc. in Data Science and Analytics, Faculty of Computer and Mathematical Sciences</p>
+                <p class="exp-detail">Master of Data Science, Concentration in Financial Data Analysis and Mathematics</p>
               </div>
             </div>
           </div>
-
           <div class="card timeline-item">
             <div class="experience-item">
               <img src="assets/img/zufe.png" alt="ZUFE logo" class="institution-logo">
@@ -189,13 +184,12 @@
                   <strong>Zhejiang University of Finance and Economics</strong>
                   <span class="exp-period-inline">Sep 2018 - Jun 2022</span>
                 </p>
-                <p class="exp-detail">B.S. in Financial Engineering, School of Finance</p>
+                <p class="exp-detail">Bachelor of Financial Engineering, School of Finance</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <div class="section" id="experience">
         <h2 class="section-title">Experience</h2>
         <div class="section-body">
@@ -214,30 +208,61 @@
           </div>
         </div>
       </div>
-
-      <div class="section" id="projects">
-        <h2 class="section-title">Projects</h2>
+      <div class="section" id="research-interests">
+        <h2 class="section-title">Research Interests</h2>
         <div class="section-body">
-          <div class="card project-card">
-            <a href="#">Project Name</a>: A short one-line summary describing what this project does and why it matters.
+          <div class="card">
+            <p class="exp-detail">Investors' use of information; informational (dis)advantages in markets; large language models for textual analysis; impact of AI on the information environment.</p>
           </div>
         </div>
       </div>
-
       <div class="section" id="publications">
-        <h2 class="section-title">Publications</h2>
+        <h2 class="section-title">Working Papers &amp; Research in Progress</h2>
         <div class="section-body">
           <div class="publications">
             <ol class="bibliography">
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Paper Title Goes Here</div>
-                    <div class="author"><strong>Guangzhe Wang</strong>, Coauthor A, Coauthor B</div>
-                    <div class="periodical"><em><strong>Conference / Journal / arXiv</strong></em></div>
-                    <div class="links">
-                      <a href="#">Paper</a> / <a href="#">Code</a> / <a href="#">Project</a>
-                    </div>
+                    <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</div>
+                    <div class="author"><strong>Guangzhe Wang</strong></div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="pub-row">
+                  <div class="pub-content">
+                    <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
+                    <div class="author"><strong>Guangzhe Wang</strong></div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="pub-row">
+                  <div class="pub-content">
+                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</div>
+                    <div class="author"><strong>Guangzhe Wang</strong></div>
+                    <div class="periodical"><span class="pub-status">Revise &amp; Resubmit</span> at <em><strong>Economics Letters</strong></em></div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="pub-row">
+                  <div class="pub-content">
+                    <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
+                    <div class="author"><strong>Guangzhe Wang</strong></div>
+                    <div class="periodical"><em>Working paper</em></div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="pub-row">
+                  <div class="pub-content">
+                    <div class="title">Does Letter to Shareholders Convey Private Information?</div>
+                    <div class="author"><strong>Guangzhe Wang</strong>, Nancy Su, Xiaoyang Li</div>
+                    <div class="periodical"><em>Draft available on request</em></div>
                   </div>
                 </div>
               </li>
@@ -245,53 +270,61 @@
           </div>
         </div>
       </div>
-
-      <div class="section" id="awards">
-        <h2 class="section-title">Awards</h2>
+      <div class="section" id="teaching">
+        <h2 class="section-title">Teaching</h2>
         <div class="section-body">
-          <div class="awards-grid">
-            <div class="award-item">
-              <span class="award-icon">🏅</span>
-              <div class="award-text"><strong>Award Name</strong></div>
-            </div>
-            <div class="award-item">
-              <span class="award-icon">🥇</span>
-              <div class="award-text"><strong>Competition / Scholarship / Honor</strong></div>
+          <div class="card timeline-item">
+            <div class="experience-item">
+              <img src="assets/img/polyu.png" alt="PolyU logo" class="institution-logo">
+              <div class="experience-content">
+                <p class="exp-title exp-title-line">
+                  <strong>The Hong Kong Polytechnic University</strong>
+                  <span class="exp-period-inline">2024 - 2025</span>
+                </p>
+                <p class="exp-detail">Teaching Assistant, School of Accounting and Finance</p>
+                <p class="exp-detail">AF5373 ESG Investment and Green Finance (Graduate)</p>
+                <p class="exp-detail">AF2108 Financial Accounting (Undergraduate)</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="section" id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="section-body">
+          <div class="card">
+            <p class="exp-detail">Proficient in Natural Language Processing and Large Language Models.</p>
+            <p class="exp-detail">Proficient in Python, Stata, and LaTeX.</p>
+          </div>
+        </div>
+      </div>
     </section>
-
     <footer class="site-footer">
       <p>
         &copy; 2026 Guangzhe Wang. All rights reserved.
       </p>
     </footer>
   </div>
-
   <script src="assets/js/scale.fix.js"></script>
+  <!-- ClustrMaps 新版 widget:通过 DOM 注入渲染,替代会失效的旧版 map_v2.js -->
+  <script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=gNBBDmDlFqUcXuvSl4rqSLpo8O1DyNdNzJUAE3mdZUQ"></script>
   <script>
     (function() {
       const themeToggle = document.getElementById('themeToggle');
       const icon = themeToggle.querySelector('i');
-
       function setTheme(isDark) {
         document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         icon.classList.toggle('fa-sun', isDark);
         icon.classList.toggle('fa-moon', !isDark);
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
       }
-
       const savedTheme = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setTheme(savedTheme ? savedTheme === 'dark' : prefersDark);
-
       themeToggle.addEventListener('click', function() {
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
         setTheme(!isDark);
       });
-
       if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
@@ -301,7 +334,6 @@
             }
           });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.section').forEach(function(el) {
           observer.observe(el);
         });
