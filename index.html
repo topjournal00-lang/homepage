@@ -118,15 +118,22 @@
       display: flex;
       align-items: flex-start;
       gap: 0.55em;
-      margin-bottom: 0.25em;   /* 论文之间的间隙进一步调小 */
+      margin-bottom: 0.1em;    /* 论文之间的间隙进一步调小 */
       padding-left: 0;
-      line-height: 1.35;
+      line-height: 1.4;
+      font-size: 1rem;         /* 保持和正文一样大小,论文字体不缩小 */
     }
     /* 清掉条目内部块的默认外边距,避免额外撑高间距 */
     #publications .pub-row,
     #publications .pub-content,
     #publications .pub-content > div {
       margin: 0;
+    }
+    /* 编号、标题、期刊行都用正文大小,防止被主题的小字号覆盖 */
+    #publications .bibliography > li::before,
+    #publications .title,
+    #publications .periodical {
+      font-size: 1rem;
     }
     /* [1] [2] 编号:放在左侧,黑色(跟随正文色) */
     #publications .bibliography > li::before {
@@ -137,20 +144,16 @@
       color: inherit;   /* 黑色/正文色 */
       font-variant-numeric: tabular-nums;
     }
-    /* 论文标题:不加粗、不斜体,尽量不换行 */
+    /* 论文标题:不加粗、不斜体,自然换行(不缩小字体) */
     #publications .title {
       font-weight: 400;
       font-style: normal;
-      white-space: nowrap;          /* 尽量保持标题在一行 */
+      white-space: normal;
       overflow-wrap: normal;
     }
-    /* 屏幕较窄放不下时允许标题换行,避免溢出 */
-    @media (max-width: 640px) {
-      #publications .title { white-space: normal; }
-    }
-    /* 期刊/状态行:和标题之间留一点点行距 */
+    /* 期刊/状态行:紧贴标题,几乎不留行距 */
     #publications .periodical {
-      margin-top: 0.15em;
+      margin-top: 0;
     }
     /* 期刊名:黑体(加粗)+ 斜体 */
     #publications .periodical em strong,
@@ -219,7 +222,7 @@
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
-          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behavior.</p>
+          <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behaviors.</p>
           <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
           <p><strong><a href="/assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
