@@ -132,10 +132,12 @@
       margin: 0;
     }
     /* 编号、标题、期刊行都用正文大小,防止被主题的小字号覆盖 */
+    /* 主题自带的 body.theme-luka .pub-content .title/.periodical 规则选择器权重更高(0,3,1),
+       会盖掉下面这些覆盖样式,所以这里必须加 !important 才能生效 */
     .pub-section .bibliography > li::before,
     .pub-section .title,
     .pub-section .periodical {
-      font-size: 1rem;
+      font-size: 1rem !important;
     }
     /* [1] [2] 编号:放在左侧,黑色(跟随正文色) */
     .pub-section .bibliography > li::before {
@@ -148,14 +150,16 @@
     }
     /* 论文标题:不加粗、不斜体,自然换行(不缩小字体) */
     .pub-section .title {
-      font-weight: 400;
+      font-weight: 400 !important;
       font-style: normal;
       white-space: normal;
       overflow-wrap: normal;
+      color: inherit !important;
     }
-    /* 期刊/状态行:紧贴标题,几乎不留行距 */
+    /* 期刊/状态行:紧贴标题,几乎不留行距;颜色跟随正文,不用主题的橙色强调色 */
     .pub-section .periodical {
       margin-top: 0;
+      color: inherit !important;
     }
     /* 期刊名:黑体(加粗)+ 斜体 */
     .pub-section .periodical em strong,
