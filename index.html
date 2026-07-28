@@ -93,13 +93,14 @@
       display: block;
       max-width: 100%;
     }
-    /* ===== Working Papers / Research 列表样式 ===== */
+    /* ===== Publications / Working Papers / Research 列表样式 ===== */
     /* 去掉左侧橙色边栏和默认列表符号,改用 CV 风格的方括号编号 [1] [2] */
-    #publications .publications,
-    #publications .bibliography,
-    #publications .bibliography > li,
-    #publications .pub-row,
-    #publications .pub-content {
+    /* .pub-section 同时用于 Publications 和 Working Papers 两个板块,各自独立编号 */
+    .pub-section .publications,
+    .pub-section .bibliography,
+    .pub-section .bibliography > li,
+    .pub-section .pub-row,
+    .pub-section .pub-content {
       border: none !important;
       border-left: none !important;
       background: none !important;
@@ -107,13 +108,13 @@
       padding-left: 0 !important;
       margin-left: 0 !important;
     }
-    #publications .bibliography {
+    .pub-section .bibliography {
       list-style: none;
       counter-reset: pub;
       padding-left: 0;
       margin: 0;
     }
-    #publications .bibliography > li {
+    .pub-section .bibliography > li {
       counter-increment: pub;
       position: relative;
       display: flex;
@@ -125,19 +126,19 @@
       font-size: 1rem;         /* 保持和正文一样大小,论文字体不缩小 */
     }
     /* 清掉条目内部块的默认外边距,避免额外撑高间距 */
-    #publications .pub-row,
-    #publications .pub-content,
-    #publications .pub-content > div {
+    .pub-section .pub-row,
+    .pub-section .pub-content,
+    .pub-section .pub-content > div {
       margin: 0;
     }
     /* 编号、标题、期刊行都用正文大小,防止被主题的小字号覆盖 */
-    #publications .bibliography > li::before,
-    #publications .title,
-    #publications .periodical {
+    .pub-section .bibliography > li::before,
+    .pub-section .title,
+    .pub-section .periodical {
       font-size: 1rem;
     }
     /* [1] [2] 编号:放在左侧,黑色(跟随正文色) */
-    #publications .bibliography > li::before {
+    .pub-section .bibliography > li::before {
       content: "[" counter(pub) "]";
       flex-shrink: 0;
       min-width: 2.1em;
@@ -146,30 +147,30 @@
       font-variant-numeric: tabular-nums;
     }
     /* 论文标题:不加粗、不斜体,自然换行(不缩小字体) */
-    #publications .title {
+    .pub-section .title {
       font-weight: 400;
       font-style: normal;
       white-space: normal;
       overflow-wrap: normal;
     }
     /* 期刊/状态行:紧贴标题,几乎不留行距 */
-    #publications .periodical {
+    .pub-section .periodical {
       margin-top: 0;
     }
     /* 期刊名:黑体(加粗)+ 斜体 */
-    #publications .periodical em strong,
-    #publications .periodical strong em {
+    .pub-section .periodical em strong,
+    .pub-section .periodical strong em {
       font-weight: 700;
       font-style: italic;
     }
     /* 期刊名如果带链接:同样加粗+斜体,颜色继承正文 */
-    #publications .periodical a {
+    .pub-section .periodical a {
       color: inherit;
       text-decoration: none;
       font-style: italic;
       font-weight: 700;
     }
-    #publications .periodical a:hover {
+    .pub-section .periodical a:hover {
       text-decoration: underline;
     }
     /* Under Review / Revise & Resubmit:普通正文,不加粗、不斜体 */
@@ -227,7 +228,7 @@
         <div class="section-body">
           <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behaviors.</p>
           <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
-          <p><strong><a href="/assets/cv/cv_guangzhe_wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
+          <p><strong><a href="/assets/cv/CV_Guangzhe%20Wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
       </div>
       <div class="section" id="education">
@@ -254,7 +255,7 @@
                   <strong>The Hong Kong Polytechnic University</strong>
                   <span class="exp-period-inline">Sep 2022 - Jun 2023</span>
                 </p>
-                <p class="exp-detail">Master of Data Science, Department of Data Science and Artificial Intelligence</p>
+                <p class="exp-detail">M.S. in Data Science and Analytics, Department of Data Science and Artificial Intelligence</p>
               </div>
             </div>
           </div>
@@ -266,7 +267,7 @@
                   <strong>Zhejiang University of Finance and Economics</strong>
                   <span class="exp-period-inline">Sep 2018 - Jun 2022</span>
                 </p>
-                <p class="exp-detail">Bachelor of Financial Engineering, School of Finance</p>
+                <p class="exp-detail">B.S. in Financial Engineering, School of Finance</p>
               </div>
             </div>
           </div>
@@ -290,7 +291,24 @@
           </div>
         </div>
       </div>
-      <div class="section" id="publications">
+      <div class="section pub-section" id="publications">
+        <h2 class="section-title">Publications</h2>
+        <div class="section-body">
+          <div class="publications">
+            <ol class="bibliography">
+              <li>
+                <div class="pub-row">
+                  <div class="pub-content">
+                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</div>
+                    <div class="periodical">&mdash; <em><strong>Economics Letters</strong></em>, <em>forthcoming</em></div>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="section pub-section" id="working-papers">
         <h2 class="section-title">Working Papers &amp; Research in Progress</h2>
         <div class="section-body">
           <div class="publications">
@@ -307,15 +325,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
-                    <div class="periodical">&mdash; <span class="pub-status">Under Review</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="pub-row">
-                  <div class="pub-content">
-                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</div>
-                    <div class="periodical">&mdash; <span class="pub-status">Revise &amp; Resubmit</span> at <em><strong>Economics Letters</strong></em></div>
+                    <div class="periodical">&mdash; <span class="pub-status">Reject &amp; Resubmit</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
                   </div>
                 </div>
               </li>
