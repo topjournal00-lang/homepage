@@ -28,23 +28,55 @@
       :root:not([data-theme="light"]) { --pub-journal: #8fb9e0; }
     }
 
-    /* ===== 版心加宽 =====
-       模板原来是 1120px,长论文标题(97 字符 ≈ 715px)放不下会折行。
-       加宽到 1280px 后标题行可用宽度从 649px 增到 ~810px。
-       侧边栏是 position:fixed,left 要跟着改成半宽 640px;
-       用 max() 兜底,避免窗口窄于 1280px 时侧边栏被推到屏幕外。 */
+    /* ===== 版心与两栏宽度 =====
+       模板原来是 1120px 版心 + 320px 侧边栏。
+       现在:版心 1340px、侧边栏 380px —— 侧边栏比模板宽 60px,给 News 腾地方;
+       版心同步加宽 60px,所以右边正文列的宽度不变,论文标题仍然是一行。
+       侧边栏是 position:fixed,left 要跟着改成半宽 670px;
+       用 max() 兜底,避免窗口窄于 1340px 时侧边栏被推到屏幕外。 */
     body.theme-luka .wrapper,
     body.theme-luka .nav-container {
-      max-width: 1280px;
+      max-width: 1340px;
     }
     body.theme-luka .sidebar {
-      left: max(0px, calc(50% - 640px));
+      width: 380px;
+      left: max(0px, calc(50% - 670px));
     }
     /* 左右内边距比模板(60/40)收窄一些,给最长的那条标题多腾出约 24px。
        题目加粗后比常规字重宽约 3%,不收窄的话 [1] 会差 2px 折行。 */
     body.theme-luka .content {
+      margin-left: 380px;
       padding-left: 44px;
       padding-right: 16px;
+    }
+    body.theme-luka .site-footer {
+      padding-left: 424px;   /* 380 侧边栏 + 44 内边距 */
+    }
+    /* 侧边栏内容比屏幕高时会冒出一条滚动条,把页面从中间劈成两半很难看。
+       这里只隐藏滚动条的外观,滚轮/触控板照常能滚。 */
+    body.theme-luka .sidebar {
+      scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* 旧版 Edge */
+    }
+    body.theme-luka .sidebar::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;                /* Chrome / Safari */
+    }
+    /* 窄屏时模板会把侧边栏改成 static 通栏排版。因为这段内联 <style> 在
+       theme-luka.css 之后,同权重下我上面那几条会盖掉模板的响应式规则,
+       所以必须在这里手动还原,否则手机端会错位。 */
+    @media (max-width: 1080px) {
+      body.theme-luka .sidebar {
+        width: 100%;
+        left: auto;
+      }
+      body.theme-luka .content {
+        margin-left: 0;
+      }
+      body.theme-luka .site-footer {
+        padding-left: 0;
+      }
     }
     /* 正文段落不跟着变宽:一行 100+ 字符太长,读起来累。
        只有论文列表需要这个额外宽度。 */
@@ -88,7 +120,8 @@
        标题图标用 Font Awesome 的 fa-rss,和 luost.me 的 News 标题同款。
        字号压到 11.5px,narrow 卡片里显得精致些。 */
     .news-card {
-      width: 280px;
+      width: 340px;      /* 侧边栏 380 - profile-card 左右各 20 内边距 */
+      max-width: 100%;   /* 窄屏侧边栏变通栏时不撑破 */
       margin: 34px auto 0;
       padding: 14px 16px 12px;
       border: 1px dashed var(--luka-border);
@@ -134,10 +167,11 @@
       font-weight: 600;
       white-space: nowrap;
     }
-    /* 期刊/会议名:比正文重一点,让"发在哪"一眼能扫到 */
+    /* 期刊/会议名:粗体 + 斜体,让"发在哪"一眼能扫到 */
     .news-venue {
       color: var(--luka-text);
-      font-weight: 600;
+      font-weight: 700;
+      font-style: italic;
     }
     /* About Me 段落两端对齐;关闭自动断词(hyphens)避免单词中间出现破折号换行 */
     #about .section-body p {
@@ -259,18 +293,25 @@
       font-style: italic;
       color: var(--pub-journal);
     }
-    /* 期刊名链接:常驻下划线,提示可以点开期刊官网;
-       hover 时下划线加粗一档作为反馈 */
+    /* 期刊名链接:不加下划线,改成名字前面一个外链箭头图标来提示可点
+       (参考 wenzhi-ding.com 的 .icon-ext-link,同款 Font Awesome 图标)。
+       鼠标悬停时才出现下划线作为反馈。 */
     .pub-section .periodical a {
       color: var(--pub-journal);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 2px;
+      text-decoration: none;
       font-style: italic;
       font-weight: 700;
     }
     .pub-section .periodical a:hover {
-      text-decoration-thickness: 2px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    /* 外链箭头:比期刊名小一号,不跟着斜体倾斜 */
+    .pub-section .periodical a .ext-icon {
+      margin-right: 5px;
+      font-size: 0.78em;
+      font-style: normal;
+      vertical-align: 1px;
     }
     /* Under Review / Reject & Resubmit:跟随第三行的灰色和粗体,只是不斜体 */
     .pub-status {
@@ -435,7 +476,7 @@
                   <div class="pub-content">
                     <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets<a class="paper-pill" href="assets/papers/prediction-markets-adjudication.pdf" target="_blank" rel="noopener">Paper Link</a></div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener">Economics Letters</a></strong></em></div>
+                    <div class="periodical"><span class="pub-status">Published</span> at <em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -453,7 +494,7 @@
                   <div class="pub-content">
                     <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-economic-behavior-and-organization" target="_blank" rel="noopener">Journal of Economic Behavior &amp; Organization</a></strong></em></div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-economic-behavior-and-organization" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Journal of Economic Behavior &amp; Organization</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -462,7 +503,7 @@
                   <div class="pub-content">
                     <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Reject &amp; Resubmit</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-behavioral-and-experimental-economics" target="_blank" rel="noopener">Journal of Behavioral and Experimental Economics</a></strong></em></div>
+                    <div class="periodical"><span class="pub-status">Reject &amp; Resubmit</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-behavioral-and-experimental-economics" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Journal of Behavioral and Experimental Economics</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -471,7 +512,7 @@
                   <div class="pub-content">
                     <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener">International Review of Economics &amp; Finance</a></strong></em></div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>International Review of Economics &amp; Finance</a></strong></em></div>
                   </div>
                 </div>
               </li>
