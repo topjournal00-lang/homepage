@@ -88,18 +88,24 @@
       counter-increment: pub;
     }
 
-    /* 第一行:[n] 论文标题。悬挂缩进,换行后与标题首字母对齐 */
-    .pub-section .pub-content .title {
+    /* 第一行:[n] 论文标题。悬挂缩进,换行后与标题首字母对齐。
+       论文名不加粗(模板默认 600,这里改回常规字重);
+       主题的 body.theme-luka .pub-content .title 权重是 (0,3,1),
+       所以选择器必须带 body.theme-luka 前缀才盖得住。 */
+    body.theme-luka .pub-section .pub-content .title {
       padding-left: 2.1em;
       text-indent: -2.1em;
       line-height: 1.5;
       margin-bottom: 4px;
+      font-weight: 400;
     }
+    /* [n] 编号保持半粗,让序号在行首更醒目 */
     .pub-section .pub-content .title::before {
       content: "[" counter(pub) "]";
       display: inline-block;
       width: 2.1em;
       text-indent: 0;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
 
