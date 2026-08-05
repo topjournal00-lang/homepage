@@ -33,7 +33,8 @@
     #education .card {
       position: relative;
     }
-    /* 校名后面的时间样式:橙色,稍小字号,和校名同一行 */
+    /* 校名后面的时间样式:橙色,和校名同一行。
+       字号与模板的 .exp-period 对齐(13px) */
     .exp-title-line {
       display: flex;
       align-items: baseline;
@@ -41,13 +42,13 @@
       gap: 0.75em;
     }
     .exp-title-line .exp-period-inline {
-      font-size: 0.9em;
-      font-weight: normal;
-      color: var(--accent-color, #c2714f);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--luka-accent);
     }
     /* 教授名字样式:橙色加粗,和日期同色 */
     .advisor-link {
-      color: var(--accent-color, #c2714f) !important;
+      color: var(--luka-accent) !important;
       font-weight: 700;
       text-decoration: none;
     }
@@ -72,102 +73,55 @@
       background-color: transparent;
       flex-shrink: 0;
     }
-    /* ===== Visitor Map 卡片样式 ===== */
-    .visitor-card-body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      overflow: hidden;
-    }
-    /* 访客地图链接:占满卡片宽度 */
-    .visitor-card-body a {
-      display: block;
-      width: 100%;
-      line-height: 0;   /* 去掉图片下方的空隙 */
-    }
-    /* 访客地图图片(MapMyVisitors 平面点状地图) */
-    .visitor-card-body img {
-      width: 100%;
-      height: auto;
-      display: block;
-      max-width: 100%;
-    }
-    /* ===== Publications / Working Papers / Research 列表样式 ===== */
-    /* 去掉左侧橙色边栏和默认列表符号,改用 CV 风格的方括号编号 [1] [2] */
-    /* .pub-section 同时用于 Publications 和 Working Papers 两个板块,各自独立编号 */
-    .pub-section .publications,
-    .pub-section .bibliography,
-    .pub-section .bibliography > li,
-    .pub-section .pub-row,
-    .pub-section .pub-content {
-      border: none !important;
-      border-left: none !important;
-      background: none !important;
-      box-shadow: none !important;
-      padding-left: 0 !important;
-      margin-left: 0 !important;
-    }
-    .pub-section .bibliography {
-      list-style: none;
+    /* ===== Publications / Working Papers 列表样式 =====
+       保留模板自带的左侧橙色边栏(border-left: 3px solid accent),
+       字号也完全沿用模板:标题 15px/600、作者 14px、期刊 14px。
+       条目内部改成三行:[n] 标题 + Paper Link → 作者 → 期刊/审稿状态。 */
+
+    /* 编号在 .content 上统一 reset,让 Publications 和 Working Papers 连续编号
+       ([1] 之后接 [2][3]...)。如果想让 Working Papers 重新从 [1] 开始,
+       把 counter-reset: pub 从 .content 移到 .pub-section .bibliography 上即可。 */
+    body.theme-luka .content {
       counter-reset: pub;
-      padding-left: 0;
-      margin: 0;
     }
     .pub-section .bibliography > li {
       counter-increment: pub;
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.55em;
-      margin-bottom: 0.1em;    /* 论文之间的间隙进一步调小 */
-      padding-left: 0;
-      line-height: 1.4;
-      font-size: 1rem;         /* 保持和正文一样大小,论文字体不缩小 */
     }
-    /* 清掉条目内部块的默认外边距,避免额外撑高间距 */
-    .pub-section .pub-row,
-    .pub-section .pub-content,
-    .pub-section .pub-content > div {
-      margin: 0;
+
+    /* 第一行:[n] 论文标题。悬挂缩进,换行后与标题首字母对齐 */
+    .pub-section .pub-content .title {
+      padding-left: 2.1em;
+      text-indent: -2.1em;
+      line-height: 1.5;
+      margin-bottom: 4px;
     }
-    /* 编号、标题、期刊行都用正文大小,防止被主题的小字号覆盖 */
-    /* 主题自带的 body.theme-luka .pub-content .title/.periodical 规则选择器权重更高(0,3,1),
-       会盖掉下面这些覆盖样式,所以这里必须加 !important 才能生效 */
-    .pub-section .bibliography > li::before,
-    .pub-section .title,
-    .pub-section .periodical {
-      font-size: 1rem !important;
-    }
-    /* [1] [2] 编号:放在左侧,黑色(跟随正文色) */
-    .pub-section .bibliography > li::before {
+    .pub-section .pub-content .title::before {
       content: "[" counter(pub) "]";
-      flex-shrink: 0;
-      min-width: 2.1em;
-      font-weight: 600;
-      color: inherit;   /* 黑色/正文色 */
+      display: inline-block;
+      width: 2.1em;
+      text-indent: 0;
       font-variant-numeric: tabular-nums;
     }
-    /* 论文标题:不加粗、不斜体,自然换行(不缩小字体) */
-    .pub-section .title {
-      font-weight: 400 !important;
-      font-style: normal;
-      white-space: normal;
-      overflow-wrap: normal;
-      color: inherit !important;
+
+    /* 第二行(作者)、第三行(期刊):与标题正文左对齐 */
+    .pub-section .pub-content .author,
+    .pub-section .pub-content .periodical {
+      padding-left: 2.1em;
     }
-    /* 期刊/状态行:紧贴标题,几乎不留行距;颜色跟随正文,不用主题的橙色强调色 */
-    .pub-section .periodical {
-      margin-top: 0;
-      color: inherit !important;
+    /* 期刊行:颜色跟随正文,不用主题的橙色强调色。
+       主题的 body.theme-luka .pub-content .periodical 权重是 (0,3,1),
+       所以这里必须带上 body.theme-luka 前缀才能盖过它。 */
+    body.theme-luka .pub-section .pub-content .periodical {
+      margin-bottom: 0;
+      color: var(--luka-text);
     }
-    /* 期刊名:黑体(加粗)+ 斜体 */
+    /* 期刊名:粗体 + 斜体 */
     .pub-section .periodical em strong,
     .pub-section .periodical strong em {
       font-weight: 700;
       font-style: italic;
     }
-    /* 期刊名如果带链接:同样加粗+斜体,颜色继承正文 */
+    /* 期刊名如果带链接:同样粗体 + 斜体,颜色继承正文 */
     .pub-section .periodical a {
       color: inherit;
       text-decoration: none;
@@ -177,11 +131,33 @@
     .pub-section .periodical a:hover {
       text-decoration: underline;
     }
-    /* Under Review / Revise & Resubmit:普通正文,不加粗、不斜体 */
+    /* Under Review / Reject & Resubmit:普通字重,不加粗、不斜体 */
     .pub-status {
       font-weight: 400;
       font-style: normal;
-      color: inherit;
+    }
+
+    /* 论文标题后面的椭圆形 "Paper Link" 按钮 */
+    .paper-pill {
+      display: inline-block;
+      margin-left: 0.5em;
+      padding: 0 10px;
+      border: 1px solid var(--luka-accent);
+      border-radius: 999px;
+      color: var(--luka-accent) !important;
+      font-size: 12px;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.7;
+      white-space: nowrap;
+      text-indent: 0;
+      vertical-align: 1px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .paper-pill:hover {
+      background: var(--luka-accent);
+      color: #fff !important;
+      filter: none;   /* 盖掉主题的 a:hover brightness 滤镜 */
     }
   </style>
 </head>
@@ -210,20 +186,16 @@
           <a href="mailto:guangzhelele.wang@connect.polyu.hk" title="Email"><i class="fa-solid fa-envelope"></i></a>
           <a href="https://www.linkedin.com/in/guangzhe-wang-54bb44366" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         </div>
-        <div class="visitor-card">
-          <div class="visitor-card-title">Visitor Map</div>
-          <div class="visitor-card-body">
-            <!--
-              ================= VISITOR MAP: MapMyVisitors (flat dotted map) =================
-              ClustrMaps 的替代方案(ClustrMaps 后端已不稳定)。用一张简单的 <img>
-              呈现平面点状世界地图,不依赖 document.write,兼容性最好。
-              这里用的是 guangzhe-wang.com 的专属 ID(site 1c6ch)。
-            -->
-            <a href="https://mapmyvisitors.com/web/1c6ch" title="Visitor Map" target="_blank" rel="noopener">
-              <img src="https://mapmyvisitors.com/map.png?d=8vPQe1PMqQ1IVAIWDLbuqh_qj9lj8NmX7ZUVvu0QD7w&cl=ffffff" alt="Visitor location map" loading="lazy">
-            </a>
-          </div>
-        </div>
+        <!--
+          ================= 原访客地图的位置(现留空) =================
+          这里原来放的是 MapMyVisitors 访客地图(site 1c6ch)。它的服务器
+          经常返回 500 并报 "Table 'mmv_v2.hits' doesn't exist",图片加载
+          失败后主页上就会出现一个破图/报错框。ClustrMaps、RevolverMaps 这类
+          免费访客地图都是同样的单点故障,所以整块直接删掉、位置留空。
+          如果以后还想看访客统计,建议用 GoatCounter / Umami / Cloudflare Web
+          Analytics 这类只在后台看数据的方案:页面上不渲染任何东西,
+          服务挂了也不会影响主页。
+        -->
       </div>
     </header>
     <section class="content">
@@ -303,8 +275,9 @@
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</div>
-                    <div class="periodical">&mdash; <em><strong>Economics Letters</strong></em>, <em>forthcoming</em></div>
+                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets<a class="paper-pill" href="assets/papers/prediction-markets-adjudication.pdf" target="_blank" rel="noopener">Paper Link</a></div>
+                    <div class="author">Solo-authored</div>
+                    <div class="periodical"><em><strong>Economics Letters</strong></em></div>
                   </div>
                 </div>
               </li>
@@ -321,7 +294,8 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</div>
-                    <div class="periodical">&mdash; <span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
+                    <div class="author">Solo-authored</div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
                   </div>
                 </div>
               </li>
@@ -329,7 +303,8 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
-                    <div class="periodical">&mdash; <span class="pub-status">Reject &amp; Resubmit</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
+                    <div class="author">Solo-authored</div>
+                    <div class="periodical"><span class="pub-status">Reject &amp; Resubmit</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
                   </div>
                 </div>
               </li>
@@ -337,15 +312,17 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
-                    <div class="periodical">&mdash; <span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener">International Review of Economics &amp; Finance</a></strong></em></div>
+                    <div class="author">Solo-authored</div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener">International Review of Economics &amp; Finance</a></strong></em></div>
                   </div>
                 </div>
               </li>
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Does Letter to Shareholders Convey Private Information? (with Caixia Hu, Xiaoyang Li, Nancy Su)</div>
-                    <div class="periodical">&mdash; <span class="pub-status">Draft available on request</span></div>
+                    <div class="title">Does Letter to Shareholders Convey Private Information?</div>
+                    <div class="author">with Caixia Hu, Xiaoyang Li, and Nancy Su</div>
+                    <!-- 目前没有期刊/审稿信息,按要求不写第三行 -->
                   </div>
                 </div>
               </li>
