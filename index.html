@@ -40,8 +40,11 @@
     body.theme-luka .sidebar {
       left: max(0px, calc(50% - 640px));
     }
+    /* 左右内边距比模板(60/40)收窄一些,给最长的那条标题多腾出约 24px。
+       题目加粗后比常规字重宽约 3%,不收窄的话 [1] 会差 2px 折行。 */
     body.theme-luka .content {
-      padding-right: 24px;
+      padding-left: 44px;
+      padding-right: 16px;
     }
     /* 正文段落不跟着变宽:一行 100+ 字符太长,读起来累。
        只有论文列表需要这个额外宽度。 */
@@ -127,16 +130,16 @@
       text-indent: -2.1em;
       line-height: 1.5;
       margin-bottom: 4px;
-      font-weight: 400;
+      /* 用 700 而不是模板的 600:下面两行都是 700,题目再轻就会被压过去 */
+      font-weight: 700;
       color: var(--luka-text);   /* 黑色(暗色模式自动变浅,不能写死 #000) */
     }
-    /* [n] 编号保持半粗,让序号在行首更醒目 */
+    /* [n] 编号:字重跟着题目走 */
     .pub-section .pub-content .title::before {
       content: "[" counter(pub) "]";
       display: inline-block;
       width: 2.1em;
       text-indent: 0;
-      font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
 
@@ -186,12 +189,12 @@
     /* 论文标题后面的椭圆形 "Paper Link" 按钮 */
     .paper-pill {
       display: inline-block;
-      margin-left: 0.5em;
-      padding: 0 10px;
+      margin-left: 0.4em;
+      padding: 0 8px;
       border: 1px solid var(--luka-accent);
       border-radius: 999px;
       color: var(--luka-accent) !important;
-      font-size: 12px;
+      font-size: 11px;
       font-style: italic;
       font-weight: 500;
       line-height: 1.7;
@@ -323,7 +326,7 @@
                   <div class="pub-content">
                     <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets<a class="paper-pill" href="assets/papers/prediction-markets-adjudication.pdf" target="_blank" rel="noopener">Paper Link</a></div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><em><strong>Economics Letters</strong></em></div>
+                    <div class="periodical"><em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener">Economics Letters</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -341,7 +344,7 @@
                   <div class="pub-content">
                     <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong>Journal of Economic Behavior &amp; Organization</strong></em></div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-economic-behavior-and-organization" target="_blank" rel="noopener">Journal of Economic Behavior &amp; Organization</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -350,7 +353,7 @@
                   <div class="pub-content">
                     <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
                     <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Reject &amp; Resubmit</span> at <em><strong>Journal of Behavioral and Experimental Economics</strong></em></div>
+                    <div class="periodical"><span class="pub-status">Reject &amp; Resubmit</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-behavioral-and-experimental-economics" target="_blank" rel="noopener">Journal of Behavioral and Experimental Economics</a></strong></em></div>
                   </div>
                 </div>
               </li>
