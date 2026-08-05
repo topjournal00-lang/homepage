@@ -18,6 +18,36 @@
   <link rel="stylesheet" href="assets/css/font_sans_serif.css">
   <link rel="stylesheet" href="assets/css/theme-luka.css">
   <style>
+    /* ===== 论文条目的配色变量 =====
+       标题用深蓝(冷色、醒目),作者/状态用灰(退后),期刊名用主题的赭橙(暖色)。
+       冷暖对比拉出三层信息层级。暗色模式换成浅蓝,保证对比度。 */
+    :root            { --pub-title: #1d3f6e; }
+    [data-theme="light"] { --pub-title: #1d3f6e; }
+    [data-theme="dark"]  { --pub-title: #8fb9e0; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --pub-title: #8fb9e0; }
+    }
+
+    /* ===== 版心加宽 =====
+       模板原来是 1120px,长论文标题(97 字符 ≈ 715px)放不下会折行。
+       加宽到 1280px 后标题行可用宽度从 649px 增到 ~810px。
+       侧边栏是 position:fixed,left 要跟着改成半宽 640px;
+       用 max() 兜底,避免窗口窄于 1280px 时侧边栏被推到屏幕外。 */
+    body.theme-luka .wrapper,
+    body.theme-luka .nav-container {
+      max-width: 1280px;
+    }
+    body.theme-luka .sidebar {
+      left: max(0px, calc(50% - 640px));
+    }
+    body.theme-luka .content {
+      padding-right: 24px;
+    }
+    /* 正文段落不跟着变宽:一行 100+ 字符太长,读起来累。
+       只有论文列表需要这个额外宽度。 */
+    #about .section-body {
+      max-width: 760px;
+    }
     /* About Me 段落两端对齐;关闭自动断词(hyphens)避免单词中间出现破折号换行 */
     #about .section-body p {
       text-align: justify;
@@ -98,6 +128,7 @@
       line-height: 1.5;
       margin-bottom: 4px;
       font-weight: 400;
+      color: var(--pub-title);
     }
     /* [n] 编号保持半粗,让序号在行首更醒目 */
     .pub-section .pub-content .title::before {
@@ -114,22 +145,24 @@
     .pub-section .pub-content .periodical {
       padding-left: 2.1em;
     }
-    /* 期刊行:颜色跟随正文,不用主题的橙色强调色。
+    /* 期刊行:"Under Review at" 这类状态文字用次要灰,让期刊名跳出来。
        主题的 body.theme-luka .pub-content .periodical 权重是 (0,3,1),
        所以这里必须带上 body.theme-luka 前缀才能盖过它。 */
     body.theme-luka .pub-section .pub-content .periodical {
       margin-bottom: 0;
-      color: var(--luka-text);
+      color: var(--luka-secondary);
     }
-    /* 期刊名:粗体 + 斜体 */
+    /* 期刊名:粗体 + 斜体 + 主题赭橙,和深蓝标题形成冷暖对比。
+       主题的 body.theme-luka strong 直接命中 <strong>,所以颜色要在这里覆盖 */
     .pub-section .periodical em strong,
     .pub-section .periodical strong em {
       font-weight: 700;
       font-style: italic;
+      color: var(--luka-accent);
     }
-    /* 期刊名如果带链接:同样粗体 + 斜体,颜色继承正文 */
+    /* 期刊名如果带链接:同样粗体 + 斜体 + 赭橙 */
     .pub-section .periodical a {
-      color: inherit;
+      color: var(--luka-accent);
       text-decoration: none;
       font-style: italic;
       font-weight: 700;
