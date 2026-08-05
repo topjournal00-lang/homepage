@@ -51,6 +51,94 @@
     #about .section-body {
       max-width: 760px;
     }
+
+    /* ===== 顶栏栏目导航 =====
+       主题的 body.theme-luka .nav-left a 权重是 (0,2,2),
+       下面这两条是 (0,3,1),类多一个,所以能盖过它。 */
+    body.theme-luka .nav-left {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      min-width: 0;
+    }
+    body.theme-luka .nav-left .nav-section {
+      color: var(--luka-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+    body.theme-luka .nav-left .nav-section:hover {
+      color: var(--luka-accent);
+      filter: none;   /* 盖掉主题的 a:hover brightness 滤镜 */
+    }
+    /* 顶栏是 position:fixed 高 60px,锚点跳转时要留出这段距离,
+       否则章节标题会被顶栏盖住 */
+    body.theme-luka .section {
+      scroll-margin-top: 84px;
+    }
+    /* 窄屏塞不下 6 个链接(合计约 520px),只保留 Home */
+    @media (max-width: 820px) {
+      body.theme-luka .nav-left .nav-section {
+        display: none;
+      }
+    }
+
+    /* ===== 侧边栏 News 卡片 =====
+       标题图标用 Font Awesome 的 fa-rss,和 luost.me 的 News 标题同款。
+       字号压到 11.5px,narrow 卡片里显得精致些。 */
+    .news-card {
+      width: 280px;
+      margin: 34px auto 0;
+      padding: 14px 16px 12px;
+      border: 1px dashed var(--luka-border);
+      border-radius: 14px;
+      text-align: left;
+    }
+    .news-card-title {
+      margin-bottom: 9px;
+      color: var(--luka-accent);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .news-card-title i {
+      margin-right: 5px;
+    }
+    .news-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .news-list li {
+      position: relative;
+      margin-bottom: 9px;
+      padding-left: 11px;
+      color: var(--luka-secondary);
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+    .news-list li:last-child {
+      margin-bottom: 0;
+    }
+    .news-list li::before {
+      content: "\2022";
+      position: absolute;
+      left: 0;
+      color: var(--luka-accent);
+    }
+    /* 日期:Oct, 2026 这种英文月份缩写 + 数字年份,不换行 */
+    .news-date {
+      color: var(--luka-accent);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    /* 期刊/会议名:比正文重一点,让"发在哪"一眼能扫到 */
+    .news-venue {
+      color: var(--luka-text);
+      font-weight: 600;
+    }
     /* About Me 段落两端对齐;关闭自动断词(hyphens)避免单词中间出现破折号换行 */
     #about .section-body p {
       text-align: justify;
@@ -171,15 +259,18 @@
       font-style: italic;
       color: var(--pub-journal);
     }
-    /* 期刊名如果带链接:同样深蓝 + 粗体 + 斜体 */
+    /* 期刊名链接:常驻下划线,提示可以点开期刊官网;
+       hover 时下划线加粗一档作为反馈 */
     .pub-section .periodical a {
       color: var(--pub-journal);
-      text-decoration: none;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
       font-style: italic;
       font-weight: 700;
     }
     .pub-section .periodical a:hover {
-      text-decoration: underline;
+      text-decoration-thickness: 2px;
     }
     /* Under Review / Reject & Resubmit:跟随第三行的灰色和粗体,只是不斜体 */
     .pub-status {
@@ -214,7 +305,12 @@
   <nav class="top-nav">
     <div class="nav-container">
       <div class="nav-left">
-        <a href="./">Home</a>
+        <a href="./" class="nav-home">Home</a>
+        <a href="#about" class="nav-section">About Me</a>
+        <a href="#education" class="nav-section">Education</a>
+        <a href="#experience" class="nav-section">Experience</a>
+        <a href="#publications" class="nav-section">Publications</a>
+        <a href="#working-papers" class="nav-section">Working Papers</a>
       </div>
       <div class="nav-right">
         <button id="themeToggle" class="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
@@ -236,15 +332,28 @@
           <a href="https://www.linkedin.com/in/guangzhe-wang-54bb44366" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
         </div>
         <!--
-          ================= 原访客地图的位置(现留空) =================
-          这里原来放的是 MapMyVisitors 访客地图(site 1c6ch)。它的服务器
-          经常返回 500 并报 "Table 'mmv_v2.hits' doesn't exist",图片加载
-          失败后主页上就会出现一个破图/报错框。ClustrMaps、RevolverMaps 这类
-          免费访客地图都是同样的单点故障,所以整块直接删掉、位置留空。
-          如果以后还想看访客统计,建议用 GoatCounter / Umami / Cloudflare Web
-          Analytics 这类只在后台看数据的方案:页面上不渲染任何东西,
-          服务挂了也不会影响主页。
+          ================= News(原访客地图的位置)=================
+          原来这里是 MapMyVisitors 访客地图,它的服务器返回 500
+          ("Table 'mmv_v2.hits' doesn't exist"),在主页上留下一个破图。
+          实测 RevolverMaps 域名已经不解析、ClustrMaps 拒绝连接,
+          这类免费访客地图基本都挂了,所以换成纯静态、永远不会失效的 News。
+          如果以后还想看访客统计,用 GoatCounter / Cloudflare Web Analytics
+          这类只在后台看数据的方案 —— 页面上不渲染任何东西,服务挂了也没影响。
         -->
+        <div class="news-card">
+          <div class="news-card-title"><i class="fa-solid fa-rss"></i> News</div>
+          <ul class="news-list">
+            <li>
+              <span class="news-date">Aug, 2026</span> &mdash; <em>Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</em> accepted at <span class="news-venue">Economics Letters</span>.
+            </li>
+            <li>
+              <span class="news-date">Jun, 2026</span> &mdash; <em>Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</em> accepted at <span class="news-venue">Research in Behavioral Finance Conference</span>.
+            </li>
+            <li>
+              <span class="news-date">May, 2026</span> &mdash; <em>Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence</em> accepted at <span class="news-venue">Southern Finance Association Annual Meeting</span>.
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
     <section class="content">
