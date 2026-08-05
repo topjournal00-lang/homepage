@@ -19,13 +19,13 @@
   <link rel="stylesheet" href="assets/css/theme-luka.css">
   <style>
     /* ===== 论文条目的配色变量 =====
-       标题用深蓝(冷色、醒目),作者/状态用灰(退后),期刊名用主题的赭橙(暖色)。
-       冷暖对比拉出三层信息层级。暗色模式换成浅蓝,保证对比度。 */
-    :root            { --pub-title: #1d3f6e; }
-    [data-theme="light"] { --pub-title: #1d3f6e; }
-    [data-theme="dark"]  { --pub-title: #8fb9e0; }
+       标题黑(正文色)、作者灰+斜体、期刊行深蓝。
+       暗色模式下深蓝要换成浅蓝,否则在深色底上几乎看不见。 */
+    :root                { --pub-journal: #1d3f6e; }
+    [data-theme="light"] { --pub-journal: #1d3f6e; }
+    [data-theme="dark"]  { --pub-journal: #8fb9e0; }
     @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) { --pub-title: #8fb9e0; }
+      :root:not([data-theme="light"]) { --pub-journal: #8fb9e0; }
     }
 
     /* ===== 版心加宽 =====
@@ -128,7 +128,7 @@
       line-height: 1.5;
       margin-bottom: 4px;
       font-weight: 400;
-      color: var(--pub-title);
+      color: var(--luka-text);   /* 黑色(暗色模式自动变浅,不能写死 #000) */
     }
     /* [n] 编号保持半粗,让序号在行首更醒目 */
     .pub-section .pub-content .title::before {
@@ -145,24 +145,29 @@
     .pub-section .pub-content .periodical {
       padding-left: 2.1em;
     }
-    /* 期刊行:"Under Review at" 这类状态文字用次要灰,让期刊名跳出来。
+    /* 第二行作者:灰色 + 斜体(灰色由模板的 .pub-content .author 提供) */
+    .pub-section .pub-content .author {
+      font-style: italic;
+    }
+    /* 第三行期刊信息:整行深蓝(含 "Under Review at" 这类状态词)。
        主题的 body.theme-luka .pub-content .periodical 权重是 (0,3,1),
        所以这里必须带上 body.theme-luka 前缀才能盖过它。 */
     body.theme-luka .pub-section .pub-content .periodical {
       margin-bottom: 0;
-      color: var(--luka-secondary);
+      color: var(--pub-journal);
     }
-    /* 期刊名:粗体 + 斜体 + 主题赭橙,和深蓝标题形成冷暖对比。
-       主题的 body.theme-luka strong 直接命中 <strong>,所以颜色要在这里覆盖 */
+    /* 期刊名:粗体 + 斜体。
+       主题的 body.theme-luka strong 直接命中 <strong>,会把颜色拉回正文色,
+       所以这里要显式写回深蓝 */
     .pub-section .periodical em strong,
     .pub-section .periodical strong em {
       font-weight: 700;
       font-style: italic;
-      color: var(--luka-accent);
+      color: var(--pub-journal);
     }
-    /* 期刊名如果带链接:同样粗体 + 斜体 + 赭橙 */
+    /* 期刊名如果带链接:同样粗体 + 斜体 + 深蓝 */
     .pub-section .periodical a {
-      color: var(--luka-accent);
+      color: var(--pub-journal);
       text-decoration: none;
       font-style: italic;
       font-weight: 700;
