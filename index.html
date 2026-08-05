@@ -145,18 +145,21 @@
     .pub-section .pub-content .periodical {
       padding-left: 2.1em;
     }
-    /* 第二行作者:灰色 + 斜体(灰色由模板的 .pub-content .author 提供) */
+    /* 第二行作者:灰色 + 斜体 + 加粗(灰色由模板的 .pub-content .author 提供) */
     .pub-section .pub-content .author {
       font-style: italic;
+      font-weight: 700;
     }
-    /* 第三行期刊信息:整行深蓝(含 "Under Review at" 这类状态词)。
+    /* 第三行:整行加粗。底色设成次要灰,这样 "Under Review at" 这类状态词
+       保持灰色,只有下面单独上色的期刊名是深蓝。
        主题的 body.theme-luka .pub-content .periodical 权重是 (0,3,1),
        所以这里必须带上 body.theme-luka 前缀才能盖过它。 */
     body.theme-luka .pub-section .pub-content .periodical {
       margin-bottom: 0;
-      color: var(--pub-journal);
+      color: var(--luka-secondary);
+      font-weight: 700;
     }
-    /* 期刊名:粗体 + 斜体。
+    /* 期刊名:深蓝 + 粗体 + 斜体。
        主题的 body.theme-luka strong 直接命中 <strong>,会把颜色拉回正文色,
        所以这里要显式写回深蓝 */
     .pub-section .periodical em strong,
@@ -165,7 +168,7 @@
       font-style: italic;
       color: var(--pub-journal);
     }
-    /* 期刊名如果带链接:同样粗体 + 斜体 + 深蓝 */
+    /* 期刊名如果带链接:同样深蓝 + 粗体 + 斜体 */
     .pub-section .periodical a {
       color: var(--pub-journal);
       text-decoration: none;
@@ -175,9 +178,8 @@
     .pub-section .periodical a:hover {
       text-decoration: underline;
     }
-    /* Under Review / Reject & Resubmit:普通字重,不加粗、不斜体 */
+    /* Under Review / Reject & Resubmit:跟随第三行的灰色和粗体,只是不斜体 */
     .pub-status {
-      font-weight: 400;
       font-style: normal;
     }
 
