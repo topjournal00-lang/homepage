@@ -12,7 +12,14 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400&display=swap" rel="stylesheet">
+  <!--
+    思源宋体(Noto Serif SC)整套中文字库有好几 MB。这里用 Google Fonts 的
+    text= 参数只取题词用到的那 8 个字,字体文件降到 2 KB 左右。
+    text= 的值是 "自由之风永远吹拂" 的 URL 编码。
+    ⚠️ 以后如果改了题词的中文,这段 text= 也要跟着改,否则新字会掉回系统默认宋体。
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&text=%E8%87%AA%E7%94%B1%E4%B9%8B%E9%A3%8E%E6%B0%B8%E8%BF%9C%E5%90%B9%E6%8B%82&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/a860a211d3.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/font_sans_serif.css">
@@ -48,6 +55,9 @@
       margin-left: 380px;
       padding-left: 44px;
       padding-right: 16px;
+      /* 模板原本是 120px。题词放在正文列最上面,占用的就是这段留白,
+         所以顶部内边距收一半,About Me 基本不下移。 */
+      padding-top: 60px;
     }
     body.theme-luka .site-footer {
       padding-left: 424px;   /* 380 侧边栏 + 44 内边距 */
@@ -71,8 +81,11 @@
         width: 100%;
         left: auto;
       }
+      /* 上面那条 .content 规则把四边内边距都写死了,窄屏必须整条还原成
+         模板的移动端取值,否则正文会左边缩进 44px、右边只留 16px,左右不对称 */
       body.theme-luka .content {
         margin-left: 0;
+        padding: 32px 0 48px;
       }
       body.theme-luka .site-footer {
         padding-left: 0;
@@ -82,6 +95,49 @@
        只有论文列表需要这个额外宽度。 */
     #about .section-body {
       max-width: 760px;
+    }
+
+    /* ===== 页首题词:自由之风永远吹拂 =====
+       中文思源宋体 Light + 英文 Cormorant Garamond 斜体,古铜金。
+       古铜金 #9c7c38 在暗底 #1a1917 上对比度只有 2.4:1 基本看不见,
+       所以暗色模式换成亮金 #d4af6a(约 7:1)。 */
+    :root                { --epigraph: #9c7c38; }
+    [data-theme="light"] { --epigraph: #9c7c38; }
+    [data-theme="dark"]  { --epigraph: #d4af6a; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --epigraph: #d4af6a; }
+    }
+    .page-epigraph {
+      margin: 0 0 38px;
+      text-align: right;
+      color: var(--epigraph);
+    }
+    .page-epigraph .cn {
+      display: block;
+      font-family: "Noto Serif SC", serif;
+      font-weight: 300;
+      font-size: 21px;
+      letter-spacing: 0.14em;
+      line-height: 1.45;
+    }
+    .page-epigraph .en {
+      display: block;
+      margin-top: 3px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 16.5px;
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+    }
+    /* 窄屏没有右侧留白可用,题词改成居中。
+       这条必须放在上面的 .page-epigraph 之后 —— 同权重下靠书写顺序决胜,
+       写在前面的话会被后面那条 text-align:right 盖掉。 */
+    @media (max-width: 1080px) {
+      .page-epigraph {
+        text-align: center;
+        margin-bottom: 30px;
+      }
     }
 
     /* ===== 顶栏栏目导航 =====
@@ -414,6 +470,10 @@
       </div>
     </header>
     <section class="content">
+      <div class="page-epigraph">
+        <span class="cn">自由之风永远吹拂</span>
+        <span class="en">The wind of freedom blows</span>
+      </div>
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
