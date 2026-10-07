@@ -375,6 +375,12 @@
       margin-top: 26px;
     }
 
+    /* 卷号/页码:和期刊名同色,让整条引用是统一的蓝,不被灰色打断。
+       直接写在子元素上,不用管父级 .periodical 那条灰色规则的权重。 */
+    .pub-section .periodical .cite-detail {
+      color: var(--pub-journal);
+    }
+
     /* DOI 链接:正体,不跟着期刊名一起斜体(斜体的 DOI 很别扭) */
     .pub-section .periodical a.doi-link {
       font-style: normal;
@@ -400,9 +406,6 @@
     .pub-section .pub-coverage a:hover {
       text-decoration: underline;
       text-underline-offset: 2px;
-    }
-    .pub-section .pub-coverage .coverage-note {
-      font-style: italic;
     }
   </style>
 </head>
@@ -471,7 +474,7 @@
         <div class="section-body">
           <p>Hello! I am <strong>Guangzhe Wang</strong>, a third-year Ph.D. candidate in Accounting at the School of Accounting and Finance, The Hong Kong Polytechnic University. My research focuses on information disclosure and applies the artificial intelligence, particularly large language models, to questions in finance and accounting. My ongoing work explores how AI shapes the information environment of capital markets and influences individual behaviors.</p>
           <p>Prior to my Ph.D., I received a Master of Science in Data Science and Analytics. I am always open to collaboration and intellectual exchange, feel free to get in touch.</p>
-          <p><strong><a href="/assets/cv/CV_Guangzhe%20Wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
+          <p><strong><a href="assets/cv/CV_Guangzhe%20Wang.pdf" target="_blank" rel="noopener">Download my CV</a></strong></p>
         </div>
       </div>
       <div class="section" id="education">
@@ -544,7 +547,7 @@
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets.<a class="paper-pill" href="assets/papers/prediction-markets-adjudication.pdf" target="_blank" rel="noopener">Paper Link</a></div>
-                    <div class="periodical"><em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em>, 268 (2026), 113176. <a class="doi-link" href="https://doi.org/10.1016/j.econlet.2026.113176" target="_blank" rel="noopener">doi:10.1016/j.econlet.2026.113176</a>.</div>
+                    <div class="periodical"><em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em><span class="cite-detail">, 268 (2026), 113176.</span> <a class="doi-link" href="https://doi.org/10.1016/j.econlet.2026.113176" target="_blank" rel="noopener">doi:10.1016/j.econlet.2026.113176</a>.</div>
                   </div>
                 </div>
               </li>
@@ -553,7 +556,7 @@
                   <div class="pub-content">
                     <div class="title">Does a Time-Weighted Average Price Deter Settlement Manipulation? Evidence from Polymarket&rsquo;s Five-Minute Bitcoin Markets<a class="paper-pill" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7445139" target="_blank" rel="noopener">SSRN Paper Link</a></div>
                     <div class="periodical"><span class="pub-status">Forthcoming</span> at <em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em></div>
-                    <div class="pub-coverage"><span class="coverage-label">Public coverage:</span> <a href="https://tradoxvps.com/polymarket-twap-settlement/" target="_blank" rel="noopener">TradoxVPS</a> &middot; <a href="https://d3jhl7jsny6f2h.cloudfront.net" target="_blank" rel="noopener">AI Referee Paper Leaderboard</a> <span class="coverage-note">(top 1% paper)</span></div>
+                    <div class="pub-coverage"><span class="coverage-label">Public coverage:</span> <a href="https://tradoxvps.com/polymarket-twap-settlement/" target="_blank" rel="noopener">TradoxVPS</a>, Top 1% paper listed in <a href="https://d3jhl7jsny6f2h.cloudfront.net" target="_blank" rel="noopener">AI Referee Paper Leaderboard</a></div>
                   </div>
                 </div>
               </li>
@@ -599,6 +602,7 @@
                   <div class="pub-content">
                     <div class="title">Does Letter to Shareholders Convey Private Information?</div>
                     <div class="author">with Caixia Hu, Xiaoyang Li, and Nancy Su</div>
+                    <div class="periodical"><span class="pub-status">Draft available on request.</span></div>
                   </div>
                 </div>
               </li>
