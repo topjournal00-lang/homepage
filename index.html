@@ -12,14 +12,7 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400&display=swap" rel="stylesheet">
-  <!--
-    思源宋体(Noto Serif SC)整套中文字库有好几 MB。这里用 Google Fonts 的
-    text= 参数只取题词用到的那 8 个字,字体文件降到 2 KB 左右。
-    text= 的值是 "自由之风永远吹拂" 的 URL 编码。
-    ⚠️ 以后如果改了题词的中文,这段 text= 也要跟着改,否则新字会掉回系统默认宋体。
-  -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300&text=%E8%87%AA%E7%94%B1%E4%B9%8B%E9%A3%8E%E6%B0%B8%E8%BF%9C%E5%90%B9%E6%8B%82&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/a860a211d3.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="assets/css/font_sans_serif.css">
@@ -55,9 +48,6 @@
       margin-left: 380px;
       padding-left: 44px;
       padding-right: 16px;
-      /* 模板原本是 120px。题词放在正文列最上面,占用的就是这段留白,
-         所以顶部内边距收一半,About Me 基本不下移。 */
-      padding-top: 60px;
     }
     body.theme-luka .site-footer {
       padding-left: 424px;   /* 380 侧边栏 + 44 内边距 */
@@ -95,49 +85,6 @@
        只有论文列表需要这个额外宽度。 */
     #about .section-body {
       max-width: 760px;
-    }
-
-    /* ===== 页首题词:自由之风永远吹拂 =====
-       中文思源宋体 Light + 英文 Cormorant Garamond 斜体,古铜金。
-       古铜金 #9c7c38 在暗底 #1a1917 上对比度只有 2.4:1 基本看不见,
-       所以暗色模式换成亮金 #d4af6a(约 7:1)。 */
-    :root                { --epigraph: #9c7c38; }
-    [data-theme="light"] { --epigraph: #9c7c38; }
-    [data-theme="dark"]  { --epigraph: #d4af6a; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) { --epigraph: #d4af6a; }
-    }
-    .page-epigraph {
-      margin: 0 0 38px;
-      text-align: right;
-      color: var(--epigraph);
-    }
-    .page-epigraph .cn {
-      display: block;
-      font-family: "Noto Serif SC", serif;
-      font-weight: 300;
-      font-size: 21px;
-      letter-spacing: 0.14em;
-      line-height: 1.45;
-    }
-    .page-epigraph .en {
-      display: block;
-      margin-top: 3px;
-      font-family: "Cormorant Garamond", serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: 16.5px;
-      letter-spacing: 0.04em;
-      line-height: 1.5;
-    }
-    /* 窄屏没有右侧留白可用,题词改成居中。
-       这条必须放在上面的 .page-epigraph 之后 —— 同权重下靠书写顺序决胜,
-       写在前面的话会被后面那条 text-align:right 盖掉。 */
-    @media (max-width: 1080px) {
-      .page-epigraph {
-        text-align: center;
-        margin-bottom: 30px;
-      }
     }
 
     /* ===== 顶栏栏目导航 =====
@@ -411,6 +358,52 @@
       color: #fff !important;
       filter: none;   /* 盖掉主题的 a:hover brightness 滤镜 */
     }
+
+    /* ===== 研究方向小标题:FinTech / AI / Disclosure(和 CV 的分组保持一致) =====
+       主题的 body.theme-luka h3 规则权重是 (0,1,2),下面这条是 (0,2,0),
+       类多一个所以能盖过它的颜色。 */
+    .pub-section .pub-group {
+      margin: 0 0 10px;
+      color: var(--luka-accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    /* 第二组及之后的小标题要和上一组拉开距离 */
+    .pub-section .bibliography + .pub-group {
+      margin-top: 26px;
+    }
+
+    /* DOI 链接:正体,不跟着期刊名一起斜体(斜体的 DOI 很别扭) */
+    .pub-section .periodical a.doi-link {
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    /* 媒体报道行:比期刊行再轻一档,放在条目最下面 */
+    .pub-section .pub-coverage {
+      margin-top: 4px;
+      padding-left: 2.1em;
+      color: var(--luka-secondary);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .pub-section .pub-coverage .coverage-label {
+      font-weight: 600;
+    }
+    .pub-section .pub-coverage a {
+      color: var(--pub-journal);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .pub-section .pub-coverage a:hover {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .pub-section .pub-coverage .coverage-note {
+      font-style: italic;
+    }
   </style>
 </head>
 <body class="theme-luka">
@@ -457,6 +450,9 @@
           <div class="news-card-title"><i class="fa-solid fa-rss"></i> News</div>
           <ul class="news-list">
             <li>
+              <span class="news-date">Oct, 2026</span> &mdash; <em>Does a Time-Weighted Average Price Deter Settlement Manipulation? Evidence from Polymarket&rsquo;s Five-Minute Bitcoin Markets</em> accepted at <span class="news-venue">Economics Letters</span>.
+            </li>
+            <li>
               <span class="news-date">Aug, 2026</span> &mdash; <em>Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets</em> accepted at <span class="news-venue">Economics Letters</span>.
             </li>
             <li>
@@ -470,10 +466,6 @@
       </div>
     </header>
     <section class="content">
-      <div class="page-epigraph">
-        <span class="cn">自由之风永远吹拂</span>
-        <span class="en">The wind of freedom blows</span>
-      </div>
       <div class="section" id="about">
         <h2 class="section-title">About Me</h2>
         <div class="section-body">
@@ -546,13 +538,22 @@
         <h2 class="section-title">Publications</h2>
         <div class="section-body">
           <div class="publications">
+            <h3 class="pub-group">FinTech</h3>
             <ol class="bibliography">
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets<a class="paper-pill" href="assets/papers/prediction-markets-adjudication.pdf" target="_blank" rel="noopener">Paper Link</a></div>
-                    <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Published</span> at <em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em></div>
+                    <div class="title">Do Prediction Markets Price Events or Adjudication? Evidence from the Disputed Polymarket Markets.<a class="paper-pill" href="assets/papers/prediction-markets-adjudication.pdf" target="_blank" rel="noopener">Paper Link</a></div>
+                    <div class="periodical"><em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em>, 268 (2026), 113176. <a class="doi-link" href="https://doi.org/10.1016/j.econlet.2026.113176" target="_blank" rel="noopener">doi:10.1016/j.econlet.2026.113176</a>.</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="pub-row">
+                  <div class="pub-content">
+                    <div class="title">Does a Time-Weighted Average Price Deter Settlement Manipulation? Evidence from Polymarket&rsquo;s Five-Minute Bitcoin Markets<a class="paper-pill" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7445139" target="_blank" rel="noopener">SSRN Paper Link</a></div>
+                    <div class="periodical"><span class="pub-status">Forthcoming</span> at <em><strong><a href="https://www.sciencedirect.com/journal/economics-letters" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Economics Letters</a></strong></em></div>
+                    <div class="pub-coverage"><span class="coverage-label">Public coverage:</span> <a href="https://tradoxvps.com/polymarket-twap-settlement/" target="_blank" rel="noopener">TradoxVPS</a> &middot; <a href="https://d3jhl7jsny6f2h.cloudfront.net" target="_blank" rel="noopener">AI Referee Paper Leaderboard</a> <span class="coverage-note">(top 1% paper)</span></div>
                   </div>
                 </div>
               </li>
@@ -564,12 +565,12 @@
         <h2 class="section-title">Working Papers &amp; Research in Progress</h2>
         <div class="section-body">
           <div class="publications">
+            <h3 class="pub-group">AI</h3>
             <ol class="bibliography">
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
                     <div class="title">Limited Attention and Generative AI in Financial Reporting: Theory and Experimental Evidence<a class="paper-pill" href="assets/papers/limited_attention_and_generative_ai.pdf" target="_blank" rel="noopener">Paper Link</a></div>
-                    <div class="author">Solo-authored</div>
                     <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-economic-behavior-and-organization" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Journal of Economic Behavior &amp; Organization</a></strong></em></div>
                   </div>
                 </div>
@@ -577,18 +578,19 @@
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Persuasion through Noisy AI Intermediaries: Theory and LLM Experiments</div>
-                    <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Reject &amp; Resubmit</span> at <em><strong><a href="https://www.sciencedirect.com/journal/journal-of-behavioral-and-experimental-economics" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Journal of Behavioral and Experimental Economics</a></strong></em></div>
+                    <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
+                    <div class="periodical"><span class="pub-status">Revise &amp; Resubmit (minor)</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>International Review of Economics &amp; Finance</a></strong></em></div>
                   </div>
                 </div>
               </li>
+            </ol>
+            <h3 class="pub-group">Disclosure</h3>
+            <ol class="bibliography">
               <li>
                 <div class="pub-row">
                   <div class="pub-content">
-                    <div class="title">Correlation Neglect and Under-Diversification of AI in Learning from Prices</div>
-                    <div class="author">Solo-authored</div>
-                    <div class="periodical"><span class="pub-status">Under Review</span> at <em><strong><a href="https://www.sciencedirect.com/journal/international-review-of-economics-and-finance" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>International Review of Economics &amp; Finance</a></strong></em></div>
+                    <div class="title">Redundant Disclosure and the Allocation of Investor Research</div>
+                    <div class="periodical"><span class="pub-status">Under Review</span> (<span class="pub-status">awaiting reviewers&rsquo; scores</span>) at <em><strong><a href="https://pubsonline.informs.org/journal/mnsc" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square ext-icon"></i>Management Science</a></strong></em></div>
                   </div>
                 </div>
               </li>
@@ -597,7 +599,6 @@
                   <div class="pub-content">
                     <div class="title">Does Letter to Shareholders Convey Private Information?</div>
                     <div class="author">with Caixia Hu, Xiaoyang Li, and Nancy Su</div>
-                    <!-- 目前没有期刊/审稿信息,按要求不写第三行 -->
                   </div>
                 </div>
               </li>
