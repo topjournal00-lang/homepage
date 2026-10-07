@@ -381,10 +381,11 @@
       color: var(--pub-journal);
     }
 
-    /* DOI 链接:正体,不跟着期刊名一起斜体(斜体的 DOI 很别扭) */
+    /* DOI 链接:正体,不跟着期刊名一起斜体(斜体的 DOI 很别扭);
+       字重跟期刊名、卷号保持一致的 700,整行粗细统一 */
     .pub-section .periodical a.doi-link {
       font-style: normal;
-      font-weight: 500;
+      font-weight: 700;
     }
 
     /* 媒体报道行:比期刊行再轻一档,放在条目最下面 */
@@ -398,14 +399,17 @@
     .pub-section .pub-coverage .coverage-label {
       font-weight: 600;
     }
+    /* 媒体报道的链接不用蓝色 —— 这一行是次要信息,跟着整行的灰走,
+       靠常驻下划线提示可点,hover 时下划线加粗一档作为反馈 */
     .pub-section .pub-coverage a {
-      color: var(--pub-journal);
+      color: inherit;
       font-weight: 600;
-      text-decoration: none;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
     }
     .pub-section .pub-coverage a:hover {
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      text-decoration-thickness: 2px;
     }
   </style>
 </head>
